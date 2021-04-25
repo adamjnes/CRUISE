@@ -4,33 +4,33 @@ Cruise (**CRU**civirus **I**teron **SE**arch) searches cressDNA virus genomes fo
 
 ## Installation
 
-Choose a working area and clone the git repository to your local machine:
-
-`$ git clone https://github.com/adamjnes/CRUISE`
-
-CRUISE requires Python3. In addition to the default libraries, the gffutils package must be installed:
+CRUISE is written in Python3. In addition to the default libraries, the gffutils package must be installed:
 
 `$ pip install gffutils`
 
+Choose a working area and clone the CRUISE git repository to your local machine:
+
+`$ git clone https://github.com/adamjnes/CRUISE`
+
 ### Folder structure
 
-The repository is organized as follows:
+Source code is in the `src` folder:
+
+- `args.py` CRUISE arguments and default values
+- `cruise.py` CRUISE implementation
+- `launch.py` CRUISE wrapper and "launch control"
+
+Example GFF files are in the `examples` folder:
+
+- Default folder in `args.py` for reading GFF input files is `gff-inputs`.
+- Default folder in `args.py` for writing GFF output files is `gff-outputs`. 
+- Expected GFF output files, useful for checking and testing, are in `gff-expected-outputs`.
+
+GFF input and output folders can be overridden in the `args.py` file or on the command line.
 
 Docker files `Dockerfile` and `requirements.txt` are contained at the top level.
 
-Source code is in `src`:
 
-- `args.py` default values for CRUISE arguments
-- `cruise.py` CRUISE implementation
-- `launch.py` wrapper file for CRUISE
-
-Example GFF files are in `examples`:
-
-- GFF files for analysis are in `gff-inputs`.
-- The default location for writing GFF output files is `gff-outputs`. 
-- Expected GFF output files for checking and testing are in `gff-expected-outputs`.
-
-GFF input and output folders can be overridden in the `args.py` file or on the command line.
 
 ## Running CRUISE from the command line
 
@@ -89,13 +89,17 @@ optional arguments:
   --scoreRange SCORERANGE
                         Score range between outputted candidates (recommended 50)
 ```
-## Running CRUISE in Docker
+## Interfacing with Geneious
 
-Docker must be  [installed](https://www.docker.com/products/docker-desktop) on the host. To create a Docker container from the CRUISE home folder:
+TBD
 
-`$ docker build --tag cruise .`
+## Running CRUISE with Docker
 
-To run Docker interactively:
+Docker must be  [installed](https://www.docker.com/products/docker-desktop) on the host. 
+
+A docker container must be fetched from `TBD` or built (see next section).
+
+To run Docker interactively with a container named `cruise`:
 
 `$ docker run -it cruise`
 
@@ -109,6 +113,9 @@ On Windows, you can avoid typing the full path with:
 
 This will run CRUISE on the GFF files in  `examples/gff-inputs` and write new GFF files to `examples/gff-outputs`.
 
-## Interfacing with Geneious
+### Building a Docker container
 
-TBD
+To create a Docker container from the CRUISE home folder, with `cruise` as the container name:
+
+`$ docker build --tag cruise .`
+
