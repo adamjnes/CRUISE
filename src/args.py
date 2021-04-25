@@ -4,7 +4,7 @@ parser = argparse.ArgumentParser(description = 'Search for iterons around CRESS 
 
 parser.add_argument("--inputFolder",
                     help = "Folder to read GFF files",
-                    default = "examples/input-gff/")
+                    default = "examples/gff-inputs/")
 
 parser.add_argument("--outputFolder",
                     help = "Folder to write GFF files",
