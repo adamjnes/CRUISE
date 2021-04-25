@@ -2,7 +2,7 @@
 
 **CRU**civirus **I**teron **SE**arch tool. Searches cressDNA virus genomes for iterons
 
-# Installation and Usage
+## Installation
 
 Clone the git repository to your local machine:
 
@@ -12,7 +12,7 @@ CRUISE reqiurs Python3. In addition to the default libraries, the gffutils packa
 
 `pip install gffutils`
 
-## Folder structure
+### Folder structure
 
 The repository is organized as follows:
 
