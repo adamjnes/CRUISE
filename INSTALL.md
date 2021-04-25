@@ -16,9 +16,9 @@ Docker files `Dockerfile` and `requirements.txt` are contained at the top level.
 
 Source code is in `src`:
 
-- args.py default values for CRUISE arguments
-- cruise.py CRUISE implementation
-- launch.py wrapper file for CRUISE
+- `args.py` default values for CRUISE arguments
+- `cruise.py` CRUISE implementation
+- `launch.py` wrapper file for CRUISE
 
 Example GFF files are in `examples`:
 
@@ -73,7 +73,7 @@ optional arguments:
                         Whether to annotate known iterons
   --maxDist MAXDIST     Maximum allowed distance between iterons
   --bestDist BESTDIST   Optimal maximum distance between iterons
-  --scoreRange SCORERANGE 
+  --scoreRange SCORERANGE
                         Score range between outputted candidates (recommended 50)
 ```
 ## Running CRUISE in Docker
