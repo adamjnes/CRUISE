@@ -43,9 +43,22 @@ To see CRUISE options and default arguments:
 `python src/launch.py --help`
 
 ```
-usage: launch.py [-h] [--inputFolder INPUTFOLDER] [--outputFolder OUTPUTFOLDER] [--minLength MINLENGTH] [--maxLength MAXLENGTH] [--range RANGE] [--rank RANK]
-                 [--numberTopIterons NUMBERTOPITERONS] [--maxScore MAXSCORE] [--wiggle WIGGLE] [--goodLength GOODLENGTH] [--doStemLoop DOSTEMLOOP]
-                 [--doKnownIterons DOKNOWNITERONS] [--maxDist MAXDIST] [--bestDist BESTDIST] [--scoreRange SCORERANGE]
+usage: launch.py [-h] [--help]
+                [--inputFolder INPUTFOLDER]
+                [--outputFolder OUTPUTFOLDER]
+                [--minLength MINLENGTH] 
+                [--maxLength MAXLENGTH] 
+                [--range RANGE] 
+                [--rank RANK]
+                [--numberTopIterons NUMBERTOPITERONS] 
+                [--maxScore MAXSCORE] 
+                [--wiggle WIGGLE] 
+                [--goodLength GOODLENGTH] 
+                [--doStemLoop DOSTEMLOOP]
+                [--doKnownIterons DOKNOWNITERONS] 
+                [--maxDist MAXDIST] 
+                [--bestDist BESTDIST] 
+                [--scoreRange SCORERANGE]
 
 Search for iterons around CRESS stem-loops in GFF files
 
