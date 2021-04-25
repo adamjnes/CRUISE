@@ -8,7 +8,7 @@ parser.add_argument("--inputFolder",
 
 parser.add_argument("--outputFolder",
                     help = "Folder to write GFF files",
-                    default = "examples/output-gff/")
+                    default = "examples/gff-outputs/")
 
 parser.add_argument("--minLength",
                     help = "Minimum iteron length",
