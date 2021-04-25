@@ -4,7 +4,7 @@ Cruise (**CRU**civirus **I**teron **SE**arch) searches cressDNA virus genomes fo
 
 ## Installation
 
-Clone the git repository to your local machine:
+Choose a working area and clone the git repository to your local machine:
 
 `$ git clone https://github.com/adamjnes/CRUISE`
 
