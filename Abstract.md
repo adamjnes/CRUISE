@@ -1,7 +1,9 @@
+# CRUISE: CRUcivirus Iteron SEarch tool
+Adam R. Jones, George W. Kasun, Nacho de la Higuera, Ken M. Stedman
+
 ---
-title: CRUISE: CRUcivirus Iteron SEarch tool
-author: Adam R. Jones, George W. Kasun, Nacho de la Higuera, Ken M. Stedman
----
+
+In preparation for [*Microbiology Resource Announcements*](mra.asm.org)
 
 *Cruciviruses* are unique ssDNA viruses with capsid genes that are homologous to RNA virus capsid genes, and replication protein genes that are homologous to DNA virus replication protein genes. The apparent hybrid nature of crucivirus genomes suggests recombination between DNA and RNA viruses. Iterons are short sequence repeats near stem-loop structures at the genomes' origin of replication. Iterons are involved in the replication process and are hypothesized to play a role in recombination events. Iteron identification is essential for the analysis of crucivirus genomes, and critical for the design of experiments aimed at investigating the origin of cruciviruses. The CRUcivirus Iteron SEarch (CRUISE) tool searches for iterons in crucivirus genomes.
 

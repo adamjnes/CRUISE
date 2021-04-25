@@ -4,11 +4,11 @@ parser = argparse.ArgumentParser(description = 'Search for iterons around CRESS 
 
 parser.add_argument("--inputFolder",
                     help = "Folder to read GFF files",
-                    default = "../test-genomes/input-gff/")
+                    default = "test-genomes/input-gff/")
 
 parser.add_argument("--outputFolder",
                     help = "Folder to write GFF files",
-                    default = "../test-genomes/output-gff/")
+                    default = "test-genomes/output-gff/")
 
 parser.add_argument("--minLength",
                     help = "Minimum iteron length",
