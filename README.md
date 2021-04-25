@@ -6,11 +6,11 @@ Cruise (**CRU**civirus **I**teron **SE**arch) searches cressDNA virus genomes fo
 
 Clone the git repository to your local machine:
 
-    `$ git clone https://github.com/adamjnes/CRUISE`
+`$ git clone https://github.com/adamjnes/CRUISE`
 
 CRUISE reqiurs Python3. In addition to the default libraries, the gffutils package must be installed:
 
-    `$ pip install gffutils`
+`$ pip install gffutils`
 
 ### Folder structure
 
@@ -40,11 +40,11 @@ TBD
 
 To run CRUISE from the command line, invoke Python from the CRUISE home folder:
 
-    `$ python src/launch.py`
+`$ python src/launch.py`
 
 To see CRUISE options and default arguments:
 
-    `$ python src/launch.py --help`
+`$ python src/launch.py --help`
 
 ```
 usage: launch.py [-h] [--help]
@@ -97,18 +97,18 @@ optional arguments:
 
 Docker must be  [installed](https://www.docker.com/products/docker-desktop) on the host. To create a Docker container from the CRUISE home folder:
 
-    `$ docker build --tag cruise .`
+`$ docker build --tag cruise .`
 
 To run Docker interactively:
 
-    `$ docker run -it cruise`
+`$ docker run -it cruise`
 
 This will execute `launch.py` on the default files, writing results *in the docker container*. The the results must be copied from the Docker container back into the host filesystem. See Docker documentation for more information. If you wish to use Docker in a batch mode, you can launch it with the `--mount` option. Replace `<cruise-home-folder>` below with the full path to the CRUISE home folder:
 
-    `$ docker run -it --mount type=bind,source=<cruise-home-folder>\examples\gff-outputs,target=/cruise/test-genomes/output-gff cruise`
+`$ docker run -it --mount type=bind,source=<cruise-home-folder>\examples\gff-outputs,target=/cruise/test-genomes/output-gff cruise`
 
 On Windows, you can avoid typing the full path with:
 
-    `$ docker run -it --mount type=bind,source=%cd%\examples\gff-outputs,target=/cruise/examples/gff-outputs cruise`
+`$ docker run -it --mount type=bind,source=%cd%\examples\gff-outputs,target=/cruise/examples/gff-outputs cruise`
 
 This will run CRUISE on the GFF files in  `examples/gff-inputs` and write new GFF files to `examples/gff-outputs`.
