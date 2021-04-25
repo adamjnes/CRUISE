@@ -8,7 +8,7 @@ Clone the git repository to your local machine:
 
 `$ git clone https://github.com/adamjnes/CRUISE`
 
-CRUISE reqiurs Python3. In addition to the default libraries, the gffutils package must be installed:
+CRUISE requires Python3. In addition to the default libraries, the gffutils package must be installed:
 
 `$ pip install gffutils`
 
@@ -32,7 +32,7 @@ Example GFF files are in `examples`:
 
 GFF input and output folders can be overridden in the `args.py` file or on the command line.
 
-## Interfacing with Genious
+## Interfacing with Geneious
 
 TBD
 
