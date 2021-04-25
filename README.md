@@ -32,10 +32,6 @@ Example GFF files are in `examples`:
 
 GFF input and output folders can be overridden in the `args.py` file or on the command line.
 
-## Interfacing with Geneious
-
-TBD
-
 ## Running CRUISE from the command line
 
 To run CRUISE from the command line, invoke Python from the CRUISE home folder:
@@ -112,3 +108,7 @@ On Windows, you can avoid typing the full path with:
 `$ docker run -it --mount type=bind,source=%cd%\examples\gff-outputs,target=/cruise/examples/gff-outputs cruise`
 
 This will run CRUISE on the GFF files in  `examples/gff-inputs` and write new GFF files to `examples/gff-outputs`.
+
+## Interfacing with Geneious
+
+TBD
