@@ -89,33 +89,9 @@ optional arguments:
   --scoreRange SCORERANGE
                         Score range between outputted candidates (recommended 50)
 ```
-## Interfacing with Geneious
+## Note about StemLoopFinder
 
-TBD
+CRUISE requires genomes with the stem loop and nonanucleotide sequence annotated. The nonanucleotide should be annotated with the type "nonanucleotide" and the stem loop should be annotated with the type "stem_loop". The program has some flexibility in naming convention but not much. Examples of this annotation format are given in the example .gff input files.
 
-## Running CRUISE with Docker
 
-Docker must be  [installed](https://www.docker.com/products/docker-desktop) on the host. 
-
-A docker container must be fetched from `TBD` or built (see next section).
-
-To run Docker interactively with a container named `cruise`:
-
-`$ docker run -it cruise`
-
-This will execute `launch.py` on the default files, writing results *in the docker container*. The the results must be copied from the Docker container back into the host filesystem. See Docker documentation for more information. If you wish to use Docker in a batch mode, you can launch it with the `--mount` option. Replace `<cruise-home-folder>` below with the full path to the CRUISE home folder:
-
-`$ docker run -it --mount type=bind,source=<cruise-home-folder>\examples\gff-outputs,target=/cruise/test-genomes/output-gff cruise`
-
-On Windows, you can avoid typing the full path with:
-
-`$ docker run -it --mount type=bind,source=%cd%\examples\gff-outputs,target=/cruise/examples/gff-outputs cruise`
-
-This will run CRUISE on the GFF files in  `examples/gff-inputs` and write new GFF files to `examples/gff-outputs`.
-
-### Building a Docker container
-
-To create a Docker container from the CRUISE home folder, with `cruise` as the container name:
-
-`$ docker build --tag cruise .`
 
