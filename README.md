@@ -91,7 +91,7 @@ optional arguments:
 ```
 ## Note about StemLoopFinder
 
-CRUISE requires genomes with the stem loop and nonanucleotide sequence annotated. The nonanucleotide should be annotated with the type "nonanucleotide" and the stem loop should be annotated with the type "stem_loop". The program has some flexibility in naming convention but not much. Examples of this annotation format are given in the example .gff input files.
+CRUISE requires genomes with the stem loop and nonanucleotide sequence annotated. As such, the program was designed to work with files processed by a sister program called StemLoopFinder which locates and annotates these structures. CRUISE is still designed to run alone, but requires that the nonanucleotide be annotated with the type "nonanucleotide" and the stem loop be annotated with the type "stem_loop". The program has some flexibility in naming convention but not much. Examples of this annotation format are given in the example .gff input files. 
 
 
 
