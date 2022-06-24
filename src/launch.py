@@ -1,7 +1,9 @@
+from audioop import findfactor
 import os
 import cruise as cruise
 import args
 import time
+import gffutils
 
 start = time.time()
 a = args.parser.parse_args()
@@ -12,13 +14,73 @@ totalFileCount = 0
 RealTotal = 0
 IteronCount = 0
 
+def inputConvert(inputFastaFile,inputGFF,inputFolder):
+    inputFasta = open(inputFastaFile, 'r')
+    sequence = True
+    fastaDict = {}
+    for line in inputFasta:
+        if ">" in line:
+            name = line[1:-1]
+        else:
+            sequence = line.strip()
+            fastaDict.update({name:sequence})
+    inputGFF = open(inputGFF,'r')
+    for name in fastaDict:
+        with open(inputFolder + name + ".gff", 'w') as fout:
+            sequence = fastaDict[name]
+            fout.write("##gff-version 3\n##source-version geneious 2020.1.2\n##sequence-region\t")
+            fout.write(name + "\t1\t" + str(len(sequence)+1) + "\n")
+            fout.write(name + "\tGeneious\tregion\t1\t" + str(len(sequence)+1) + "\t.\t+\t0\tIs_circular=true\n")
+            for line in inputGFF:
+                if name in line:
+                    thisline = line.replace("   ","\t")
+                    fout.write(thisline)
+                else:
+                    break
+            fout.write("##FASTA\n>" + name + "\n")
+            fout.write(sequence)
+         
+def outputConvert(outputFolder, outputGFF,outputAnnotations):
+    annotationSourceList = outputAnnotations.split(" ")
+    positionIndex = int(annotationSourceList[0])
+    if positionIndex == -1:
+        filter = False
+    elif positionIndex not in range(1,10):
+        print("Annotations filter argument is faulty! Preserving all annotations")
+        filter = False
+    else:
+        filter = True
+    annotationSourceList.pop(0)
+    with os.scandir(outputFolder) as folder:
+        with open(outputGFF,'w') as output:
+            for entry in folder:
+                if entry.name.endswith('.gff') and entry.is_file():
+                    fin = open(entry.path,'r')
+                    start = False
+                    for line in fin:
+                        if "##FASTA" in line:
+                            break
+                        elif "##sequence-region" in line:
+                            start = True
+                        elif start == True:
+                            if filter == True:
+                                featureList = line.split()
+                                featureOfInterest = featureList[positionIndex-1]
+                                if featureOfInterest in annotationSourceList:
+                                    output.write(line)
+                            else:
+                                output.write(line)
+
 with os.scandir(a.inputFolder) as folder:
+    directory = os.getcwd()
+    inputFolder = directory + "/" + a.inputFolder #creating same object twice
+    inputConvert(a.inputFasta,a.inputGFF,inputFolder)
     for entry in folder:
         if entry.name.endswith('.gff') and entry.is_file():
             outputFile = cruise.getOutputFile(entry, a.outputFolder)
 
-            print(f"\nInput file:  {a.inputFolder + entry.name}")
-            print(f"Output file: {outputFile}")
+            #print(f"\nInput file:  {a.inputFolder + entry.name}")
+            #print(f"Output file: {outputFile}")
 
             Data = cruise.findPosIterons(
                 a.inputFolder + entry.name, 
@@ -55,6 +117,8 @@ with os.scandir(a.inputFolder) as folder:
             #     FileCount += 1
             # for x in stats:
             #     print(x.sequence, x.positions, x.score)
+
+outputConvert(a.outputFolder,a.outputGFF,a.outputAnnotations)
 
 print("\nDone: " + str(IteronCount) +
       " iteron candidates found in " + str(FileCount) +

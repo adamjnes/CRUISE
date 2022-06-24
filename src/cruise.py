@@ -15,6 +15,8 @@ import re
 # use program to find cruci iterons and make database
 # 1stem-loop inverted repeats start right after nona end and a little before nona start, always longer than 5?
 
+#fix print messages, capitalization w list method
+
 knownIterons = ['TTGTCCAC','AGTGGGA', 'GCCACCC', 'GGGGA', 'TCTGA', 
                 'TTGAGAA', 'GGCCGGG', 'GTCCCG', 'TATCTCGCT', 'GTTACAT',
                 'AGGCGCA', 'CTGGTCTAAA', 'CACACACACACA', 'AGCGTT', 'GGGTTAGG', 
@@ -41,7 +43,7 @@ iupac_to_nuc = {'a': 'a', 't': 'tu', 'g': 'g', 'c': 'c',
                 'k': 'gtu','m': 'ac', 'b': 'cgtu', 'd': 'agtu', 
                 'h': 'actu', 'v': 'acg', 'n': 'acgtu', 'u':'ut', }
 
-complementDNA = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
+complementDNA = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C', 'a': 't', 't': 'a', 'c': 'g', 'g': 'c'}
 
 tagIteronsDict =    {'TGGTCA': 'RDHV', 'CGGCAG': 'PCV1/PCV2 Iteron',
                     'GGGGCACC': 'BFDV1/2 Iteron', 'GGTGTCTGGAGTC': 'ToLCV-NDE A1 Iteron',
@@ -53,6 +55,8 @@ tagIteronsDict =    {'TGGTCA': 'RDHV', 'CGGCAG': 'PCV1/PCV2 Iteron',
                     'GGAGT': 'Tomato Motile VIrus Iteron',
                     'GGTGTC': 'Soybean Crinkle Leaf Virus Iteron',
                     'TATTAC': 'RDHV Minimal Nick Site'}
+
+tagIteronsDict = {}
 
 
 
@@ -89,7 +93,8 @@ def getOutputFile(inputFile, outputDir):
     k = k.split('/')[-1]
     k = k.strip('.gff')
     inputFileName = k
-    outputFile = str(outputDir + inputFileName + "-cruise.gff")
+    outputFile = str(outputDir + inputFileName + ".gff")
+    #outputFile = str(outputDir + inputFileName + "-cruise.gff") #if -cruise should be added to file names
     return outputFile
 
 
@@ -214,9 +219,6 @@ class Iteron(object):
         AT = ['A', 'T']
         ATcount = 0
         sameBaseCount = 0
-        
-        if self.sequence == "GCCCG":
-            print('gi')
         # dist between iterons
         for x in self.dist:
             if abs(len(self.sequence) - x) <= wiggle:
@@ -322,7 +324,6 @@ class Iteron(object):
                                     index = -1
                             isPerfect.insert(index, False)
                             listOfPositions.insert(index, n)
-                            #input("stop ")
         self.perfect = isPerfect
         self.positions = listOfPositions
 
@@ -402,6 +403,7 @@ def getSampleString(gffFile, nn, buffer, regionlength):
         splitstringlist.append(samplestring[nn.start-buffer-1:len(samplestring)])
         splitstringlist.append(samplestring[0:nn.end+buffer])
         return ''.join(splitstringlist)
+    samplestring = samplestring.upper()
     return samplestring[nn.start-buffer-1:nn.end+buffer]
 
 def buildStringDict(samplestring, buffer, minLength, maxLength):
@@ -417,8 +419,6 @@ def buildStringDict(samplestring, buffer, minLength, maxLength):
             a += samplestring[i+n]
             n += 1
         while minLength <= len(a) <= maxLength:
-            if a == "CACACACACACA":
-                print(a)
             check = False
             if a in samplestringdict:
                 if i - len(a) >= samplestringdict[a][1][-1]:
@@ -459,15 +459,9 @@ def removeJunk(samplestringdict, samplestring, buffer, maxDist):
     that are entirely contained inside another substring. Then, does preliminary distance
     and location analysis on candidates'''
     # remove repeats (lower count than length of positions)
-    if "CACACACACACA" in samplestringdict:
-        print('hi')
     repeatdict = {x: samplestringdict[x] for x in samplestringdict if samplestringdict[x][0] > 1}
     repeatdictkeys = list(repeatdict.keys())
-    if "CACACACACACA" in repeatdict:
-        print('hi')
     for possub in repeatdict:
-        if possub == "CACACACACACA":
-            print('hi')
         for possuper in repeatdictkeys:
             # check if:
             #   1) the possible superstring is longer than the possible substring,
@@ -665,9 +659,9 @@ def outputInfo(iteronslist, inputFile, outputFile, regionlength, doStemLoop, doK
                     if x.sequence in tagIteronsDict:
                         input("hey check this out")
                     elif not x.stemLoop[y] == None:
-                        newiteronfeatures.append(str(inputFileName) + "\tIteron_Finder\tstem_loop_repeats" + "\t" + str(start) + "\t" + str(end-1) + "\t.\t.\t.\tName=" + perfectTag + "stem-loop repeats" + str(sIdentifier) + '\n')
+                        newiteronfeatures.append(str(inputFileName) + "\tCRUISE\tstem_loop_repeats" + "\t" + str(start) + "\t" + str(end-1) + "\t.\t.\t.\tName=" + perfectTag + "stem-loop repeats" + str(sIdentifier) + '\n')
                     else:
-                        newiteronfeatures.append(str(inputFileName) + "\tIteron_Finder\tstem_loop_repeats" + "\t" + str(start) + "\t" + str(end-1) + "\t.\t.\t.\tName=" + perfectTag + "S iteron" + str(sIdentifier) + '\n')
+                        newiteronfeatures.append(str(inputFileName) + "\tCRUISE\tstem_loop_repeats" + "\t" + str(start) + "\t" + str(end-1) + "\t.\t.\t.\tName=" + perfectTag + "S iteron" + str(sIdentifier) + '\n')
                 sIdentifier += 1
             # elif not x.knownIteron == None and x.stemLoop == None and doKnownIterons == True:
             #     for y in x.positions:
@@ -677,7 +671,7 @@ def outputInfo(iteronslist, inputFile, outputFile, regionlength, doStemLoop, doK
             #         else:
             #             start = y
             #             end = y + len(x.sequence)
-            #         newiteronfeatures.append(str(inputFileName) + "\tIteron_Finder\tknown_iteron" + str(identifier) + "\t" + str(start) + "\t" + str(end-1) + "\t.\t.\t.\tName=K iteron" + '\n')
+            #         newiteronfeatures.append(str(inputFileName) + "\tCRUISE\tknown_iteron" + str(identifier) + "\t" + str(start) + "\t" + str(end-1) + "\t.\t.\t.\tName=K iteron" + '\n')
             #     identifier += 1
             else:
                 for i in range(len(x.positions)):
@@ -692,15 +686,13 @@ def outputInfo(iteronslist, inputFile, outputFile, regionlength, doStemLoop, doK
                         start = y
                         end = y + len(x.sequence)
                     if x.sequence in tagIteronsDict:
-                        newiteronfeatures.append(str(inputFileName) + "\tIteron_Finder\t" + 'tagIteron' + "\t" + str(start) + "\t" + str(end-1) + "\t.\t.\t.\tName=" + perfectTag + tagIteronsDict[x.sequence] + str(identifier) + '\n')
+                        newiteronfeatures.append(str(inputFileName) + "\tCRUISE\t" + 'tagIteron' + "\t" + str(start) + "\t" + str(end-1) + "\t.\t.\t.\tName=" + perfectTag + tagIteronsDict[x.sequence] + str(identifier) + '\n')
                     else:
-                        newiteronfeatures.append(str(inputFileName) + "\tIteron_Finder\titeron" + "\t" + str(start) + "\t" + str(end-1) + "\t.\t.\t.\tName=" + perfectTag + "iteron" + str(identifier) + '\n')
+                        newiteronfeatures.append(str(inputFileName) + "\tCRUISE\titeron" + "\t" + str(start) + "\t" + str(end-1) + "\t.\t.\t.\tName=" + perfectTag + "iteron" + str(identifier) + '\n')
                 identifier += 1
         newiteronfeatures = ''.join(newiteronfeatures)
         for line in inputFile:
             skip = False
-            #if 'Iteron?' in line:
-                #skip = True
             if not skip:
                 newFile.append(line)
             if '##sequence' in line and start:

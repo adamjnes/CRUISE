@@ -2,13 +2,32 @@ import argparse
 
 parser = argparse.ArgumentParser(description = 'Search for iterons around CRESS stem-loops in GFF files')
 
+parser.add_argument("--inputFasta",
+                    help = "relative path for input FASTA file",
+                    default = "src/test.fasta")
+
+parser.add_argument("--inputGFF",
+                    help = "relative path for input GFF file",
+                    default = "src/out.gff")
+
 parser.add_argument("--inputFolder",
-                    help = "Folder to read GFF files",
-                    default = "examples/gff-inputs/")
+                    help = "relative path for folder to read GFF files",
+                    default = "examples/inputall/")
 
 parser.add_argument("--outputFolder",
-                    help = "Folder to write GFF files",
-                    default = "examples/gff-outputs/")
+                    help = "relative path for folder to write GFF files",
+                    default = "examples/outputall/")
+
+parser.add_argument("--outputGFF",
+                    help = "relative path for output GFF file",
+                    default = "examples/finaloutput.gff")
+
+parser.add_argument("--outputAnnotations",
+                    help = "identifiers to selectively preserve annotations, see documentation for details",
+                    default = "2 CRUISE")
+                    #accepts string of identifiers, space-separated
+                    #first value is an integer, -1 to preserve all annotations, 1-9 to preserve based on position index
+                    #another default: "2 CRUISE Stem-Loop_Finder Geneious"                    
 
 parser.add_argument("--minLength",
                     help = "Minimum iteron length",

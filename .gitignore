@@ -128,3 +128,10 @@ dmypy.json
 # Pyre type checker
 .pyre/
 src/test.py
+examples/gff-outputs/CruCM-82-cruise.gff
+examples/gff-outputs/CruCM-155-cruise.gff
+examples/gff-outputs/CruCM-114-cruise.gff
+examples/gff-outputs/CruCM-471-cruise.gff
+examples/gff-outputs/CruV-81-cruise.gff
+examples/gff-outputs/CruV-86-cruise.gff
+examples/gff-outputs/CruV-88-cruise.gff
