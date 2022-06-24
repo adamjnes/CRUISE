@@ -4,33 +4,33 @@ Cruise (**CRU**civirus **I**teron **SE**arch) searches cressDNA virus genomes fo
 
 ## Installation
 
-Choose a working area and clone the git repository to your local machine:
-
-`$ git clone https://github.com/adamjnes/CRUISE`
-
-CRUISE requires Python3. In addition to the default libraries, the gffutils package must be installed:
+CRUISE is written in Python3. In addition to the default libraries, the gffutils package must be installed:
 
 `$ pip install gffutils`
 
+Choose a working area and clone the CRUISE git repository to your local machine:
+
+`$ git clone https://github.com/adamjnes/CRUISE`
+
 ### Folder structure
 
-The repository is organized as follows:
+Source code is in the `src` folder:
+
+- `args.py` CRUISE arguments and default values
+- `cruise.py` CRUISE implementation
+- `launch.py` CRUISE wrapper and "launch control"
+
+Example GFF files are in the `examples` folder:
+
+- Default folder in `args.py` for reading GFF input files is `gff-inputs`.
+- Default folder in `args.py` for writing GFF output files is `gff-outputs`. 
+- Expected GFF output files, useful for checking and testing, are in `gff-expected-outputs`.
+
+GFF input and output folders can be overridden in the `args.py` file or on the command line.
 
 Docker files `Dockerfile` and `requirements.txt` are contained at the top level.
 
-Source code is in `src`:
 
-- `args.py` default values for CRUISE arguments
-- `cruise.py` CRUISE implementation
-- `launch.py` wrapper file for CRUISE
-
-Example GFF files are in `examples`:
-
-- GFF files for analysis are in `gff-inputs`.
-- The default location for writing GFF output files is `gff-outputs`. 
-- Expected GFF output files for checking and testing are in `gff-expected-outputs`.
-
-GFF input and output folders can be overridden in the `args.py` file or on the command line.
 
 ## Running CRUISE from the command line
 
@@ -89,26 +89,9 @@ optional arguments:
   --scoreRange SCORERANGE
                         Score range between outputted candidates (recommended 50)
 ```
-## Running CRUISE in Docker
+## Note about StemLoopFinder
 
-Docker must be  [installed](https://www.docker.com/products/docker-desktop) on the host. To create a Docker container from the CRUISE home folder:
+CRUISE requires genomes with the stem loop and nonanucleotide sequence annotated. As such, the program was designed to work with files processed by a sister program called StemLoopFinder which locates and annotates these structures. CRUISE is still designed to run alone, but requires that the nonanucleotide be annotated with the type "nonanucleotide" and the stem loop be annotated with the type "stem_loop". The program has some flexibility in naming convention but not much. Examples of this annotation format are given in the example .gff input files. 
 
-`$ docker build --tag cruise .`
 
-To run Docker interactively:
 
-`$ docker run -it cruise`
-
-This will execute `launch.py` on the default files, writing results *in the docker container*. The the results must be copied from the Docker container back into the host filesystem. See Docker documentation for more information. If you wish to use Docker in a batch mode, you can launch it with the `--mount` option. Replace `<cruise-home-folder>` below with the full path to the CRUISE home folder:
-
-`$ docker run -it --mount type=bind,source=<cruise-home-folder>\examples\gff-outputs,target=/cruise/test-genomes/output-gff cruise`
-
-On Windows, you can avoid typing the full path with:
-
-`$ docker run -it --mount type=bind,source=%cd%\examples\gff-outputs,target=/cruise/examples/gff-outputs cruise`
-
-This will run CRUISE on the GFF files in  `examples/gff-inputs` and write new GFF files to `examples/gff-outputs`.
-
-## Interfacing with Geneious
-
-TBD
