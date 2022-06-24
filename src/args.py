@@ -12,11 +12,11 @@ parser.add_argument("--inputGFF",
 
 parser.add_argument("--inputFolder",
                     help = "relative path for folder to read GFF files",
-                    default = "examples/inputall/")
+                    default = "examples/gff-inputs/")
 
 parser.add_argument("--outputFolder",
                     help = "relative path for folder to write GFF files",
-                    default = "examples/outputall/")
+                    default = "examples/gff-outputs/")
 
 parser.add_argument("--outputGFF",
                     help = "relative path for output GFF file",
