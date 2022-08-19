@@ -20,7 +20,7 @@ Source code is in the `src` folder:
 - `cruise.py` CRUISE implementation
 - `launch.py` CRUISE wrapper and "launch control"
 
-Test GFF files are in the `examples` folder:
+Test files are in the `examples` folder:
 
 - `test.fasta` is the .fasta file containing the sequences for analysis.
 - `out.gff` is the .gff file associated with the above fasta file, containing essential annotations for CRUISE's operation, taken from the output of StemLoop-Finder.
