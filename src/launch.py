@@ -3,7 +3,7 @@ import os
 import cruise as cruise
 import args
 import time
-import gffutils
+
 
 start = time.time()
 a = args.parser.parse_args()
@@ -71,19 +71,34 @@ def outputConvert(outputFolder, outputGFF,outputAnnotations):
                             else:
                                 output.write(line)
 
-with os.scandir(a.inputFolder) as folder:
+#replace a.inputFolder and a.outputFolder w constants
+
+#ghost folders for internal operation
+internalFolder = "internal/"
+inputFolder = internalFolder + "gff-split-inputs/"
+outputFolder = internalFolder + "gff-split-outputs/"
+try:
+    os.makedirs(inputFolder)
+except OSError:
+    print("Folder 'internal/gff-split-inputs' exists, delete it or modify internal folders")
+try:
+    os.makedirs(outputFolder)
+except OSError:
+    print("Folder 'internal/gff-split-outputs' exists, delete it or modify internal folders")
+
+inputConvert(a.inputFasta,a.inputGFF,inputFolder)
+with os.scandir(inputFolder) as folder:
     directory = os.getcwd()
-    inputFolder = directory + "/" + a.inputFolder #creating same object twice
-    inputConvert(a.inputFasta,a.inputGFF,inputFolder)
+    inputFolder = directory + "/" + inputFolder #creating same object twice
     for entry in folder:
         if entry.name.endswith('.gff') and entry.is_file():
-            outputFile = cruise.getOutputFile(entry, a.outputFolder)
+            outputFile = cruise.getOutputFile(entry, outputFolder)
 
-            #print(f"\nInput file:  {a.inputFolder + entry.name}")
+            #print(f"\nInput file:  {inputFolder + entry.name}")
             #print(f"Output file: {outputFile}")
 
             Data = cruise.findPosIterons(
-                a.inputFolder + entry.name, 
+                inputFolder + entry.name, 
                 outputFile, 
                 a.minLength, 
                 a.maxLength,
@@ -118,7 +133,19 @@ with os.scandir(a.inputFolder) as folder:
             # for x in stats:
             #     print(x.sequence, x.positions, x.score)
 
-outputConvert(a.outputFolder,a.outputGFF,a.outputAnnotations)
+outputConvert(outputFolder,a.outputGFF,a.outputAnnotations)
+
+with os.scandir(inputFolder) as folder:
+    for file in folder:
+        os.remove(file)
+
+with os.scandir(outputFolder) as folder:
+    for file in folder:
+        os.remove(file)
+
+os.rmdir(inputFolder)
+os.rmdir(outputFolder)
+os.rmdir(internalFolder)
 
 print("\nDone: " + str(IteronCount) +
       " iteron candidates found in " + str(FileCount) +

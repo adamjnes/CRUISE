@@ -4,19 +4,11 @@ parser = argparse.ArgumentParser(description = 'Search for iterons around CRESS 
 
 parser.add_argument("--inputFasta",
                     help = "relative path for input FASTA file",
-                    default = "src/test.fasta")
+                    default = "examples/test.fasta")
 
 parser.add_argument("--inputGFF",
                     help = "relative path for input GFF file",
-                    default = "src/out.gff")
-
-parser.add_argument("--inputFolder",
-                    help = "relative path for folder to read GFF files",
-                    default = "examples/gff-inputs/")
-
-parser.add_argument("--outputFolder",
-                    help = "relative path for folder to write GFF files",
-                    default = "examples/gff-outputs/")
+                    default = "examples/out.gff")
 
 parser.add_argument("--outputGFF",
                     help = "relative path for output GFF file",
