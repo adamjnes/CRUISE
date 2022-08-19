@@ -3,11 +3,11 @@ import argparse
 parser = argparse.ArgumentParser(description = 'Search for iterons around CRESS stem-loops in GFF files')
 
 parser.add_argument("--inputFasta",
-                    help = "relative path for input FASTA file",
+                    help = "relative path for input FASTA file with all sequences",
                     default = "examples/test.fasta")
 
 parser.add_argument("--inputGFF",
-                    help = "relative path for input GFF file",
+                    help = "relative path for associated input GFF file",
                     default = "examples/out.gff")
 
 parser.add_argument("--outputGFF",

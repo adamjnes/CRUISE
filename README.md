@@ -20,13 +20,13 @@ Source code is in the `src` folder:
 - `cruise.py` CRUISE implementation
 - `launch.py` CRUISE wrapper and "launch control"
 
-Example GFF files are in the `examples` folder:
+Test GFF files are in the `examples` folder:
 
-- Default folder in `args.py` for reading GFF input files is `gff-inputs`.
-- Default folder in `args.py` for writing GFF output files is `gff-outputs`. 
-- Expected GFF output files, useful for checking and testing, are in `gff-expected-outputs`.
+- `test.fasta` is the .fasta file containing the sequences for analysis.
+- `out.gff` is the .gff file associated with the above fasta file, containing essential annotations for CRUISE's operation, taken from the output of StemLoop-Finder.
+- `finaloutput.gff` is the final output CRUISE produces, with selected annotations controlled through the `args.py` file (see below)
 
-GFF input and output folders can be overridden in the `args.py` file or on the command line.
+Arguments can be overridden in the `args.py` file or on the command line.
 
 Docker files `Dockerfile` and `requirements.txt` are contained at the top level.
 
@@ -44,8 +44,10 @@ To see CRUISE options and default arguments:
 
 ```
 usage: launch.py [-h] [--help]
-                [--inputFolder INPUTFOLDER]
-                [--outputFolder OUTPUTFOLDER]
+                [--inputFasta INPUTFASTA]
+                [--inputGFF INPUTGFF]
+                [--outputGFF OUTPUTGFF]
+                [--outputAnnotations OUTPUTANNOTATIONS]
                 [--minLength MINLENGTH] 
                 [--maxLength MAXLENGTH] 
                 [--range RANGE] 
@@ -64,10 +66,14 @@ Search for iterons around CRESS stem-loops in GFF files
 
 optional arguments:
   -h, --help            show this help message and exit
-  --inputFolder INPUTFOLDER
-                        Folder to read GFF files
-  --outputFolder OUTPUTFOLDER
-                        Folder to write GFF files
+  --inputFasta INPUTFASTA
+                        relative path for input FASTA file with all sequences
+  --inputGFF INPUTGFF
+                        relative path for associated input GFF file
+  --outputGFF OUTPUTGFF
+                        relative path for output GFF file
+  --outputAnnotations OUTPUTANNOTATIONS
+                        identifiers to selectively preserve annotations, see documentation for details                                         
   --minLength MINLENGTH
                         Minimum iteron length
   --maxLength MAXLENGTH
@@ -91,7 +97,11 @@ optional arguments:
 ```
 ## Note about StemLoopFinder
 
-CRUISE requires genomes with the stem loop and nonanucleotide sequence annotated. As such, the program was designed to work with files processed by a sister program called StemLoopFinder which locates and annotates these structures. CRUISE is still designed to run alone, but requires that the nonanucleotide be annotated with the type "nonanucleotide" and the stem loop be annotated with the type "stem_loop". The program has some flexibility in naming convention but not much. Examples of this annotation format are given in the example .gff input files. 
+CRUISE requires genomes with the stem loop and nonanucleotide sequence annotated. As such, the program was designed to work with files processed by a sister program called StemLoopFinder which locates and annotates these structures. CRUISE is still designed to run alone, but requires that the nonanucleotide be annotated with the type "nonanucleotide" and the stem loop be annotated with the type "stem_loop". The program has some flexibility in naming convention but not much. Examples of this annotation format are given in the example .gff input files.
+
+## Note about --outputAnnotations
+
+This argument accepts a specially-formatted string of identifiers, space-separated. The first value is an integer: -1 to preserve all annotations, 1-9 to preserve based on position index. For example, the argument "2 CRUISE Stem-Loop_Finder Geneious" will preserve all annotations with one of those three sources (CRUISE, Stem-Loop_Finder, and Geneious), as source is the value stored in the second position index. See general .gff3 format documentation for all position indeces and their values.
 
 
 
