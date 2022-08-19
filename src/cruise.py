@@ -69,7 +69,7 @@ def createDB(gffFile):
             if "Nona" in line:
                 listOfNonas.append(gff.feature.feature_from_line(line))
     if len(listOfNonas) < 1:
-        print('No nonanucleotides to search around!')
+        #print('No nonanucleotides to search around!')
         return None
     nnlist = listOfNonas
     listOfLoops = list(db.features_of_type("stem_loop"))
@@ -79,7 +79,7 @@ def createDB(gffFile):
             if "tem-loop" in line:
                 listOfLoops.append(gff.feature.feature_from_line(line))
     if len(listOfLoops) < 1:
-        print('No stem-loops to search around!')
+        #print('No stem-loops to search around!')
         return None
     stem_looplist = listOfLoops
     regionlength = list(db.features_of_type("region"))[0].end
@@ -141,9 +141,9 @@ class Iteron(object):
                     self.positions[x] = nn.start - buffer + self.positions[x]
             else:
                 self.positions[x] = nn.start - buffer + self.positions[x]
-            if nn.start < self.positions[x] < nn.end:
-                print('tagged iteron?')
-                print(self.sequence)
+            #if nn.start < self.positions[x] < nn.end:
+                #print('tagged iteron?')
+                #print(self.sequence)
 
     def getDistance(self):
         distances = []
@@ -762,7 +762,7 @@ def findPosIterons(gffFileIn, gffFileOut, minLength, maxLength, buffer, wiggle, 
                             if x.score <= maxScore:
                                 finaliteronslist.append(x)
                                 RealTotal += 1
-                    print(x.sequence,x.score)
+                    #print(x.sequence,x.score)
                 if rank:
                     iteronslist.sort(key=lambda x:x.score)
                     finaliteronslist = iteronslist[:numberTopIterons+add]
@@ -773,15 +773,15 @@ def findPosIterons(gffFileIn, gffFileOut, minLength, maxLength, buffer, wiggle, 
                 for x in iteronslist:
                     if x.tag:
                         finaliteronslist.append(x)
-                for x in finaliteronslist:
-                    print(x.sequence, x.positions, x.stemLoop)
+                #for x in finaliteronslist:
+                    #print(x.sequence, x.positions, x.stemLoop)
                 anyIterons = outputInfo(finaliteronslist, gffFileIn, gffFileOut, regionlength, doStemLoop, doKnownIterons, notFirstNona)
                 if anyIterons:
                     foundIterons = True
                     notFirstNona = True
                     newIteronCount = len(finaliteronslist)
-            else:
-                print('No stem-loop?')
+            #else:
+                #print('No stem-loop?')
             #return finaliteronslist
         return (foundIterons, newIteronCount)
 
